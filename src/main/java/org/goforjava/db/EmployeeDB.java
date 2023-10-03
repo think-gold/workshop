@@ -3,13 +3,16 @@ package org.goforjava.db;
 import org.goforjava.domain.Employee;
 import org.goforjava.domain.Id;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class EmployeeDB implements DB<Employee> {
 
     private final Map<Id, Employee> employeeMap = new HashMap<>();
+
+    @Override
+    public List<Employee> findAll() {
+        return new ArrayList<>(employeeMap.values());
+    }
 
     @Override
     public Optional<Employee> getById(Id id) {
