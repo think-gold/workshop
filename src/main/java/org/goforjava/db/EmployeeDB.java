@@ -4,7 +4,6 @@ import org.goforjava.domain.Employee;
 import org.goforjava.domain.Id;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class EmployeeDB implements DB<Employee> {
 
@@ -12,7 +11,7 @@ public class EmployeeDB implements DB<Employee> {
 
     @Override
     public List<Employee> findAll() {
-        return new ArrayList<>(employeeMap.values());
+        return List.of();
     }
 
     @Override
