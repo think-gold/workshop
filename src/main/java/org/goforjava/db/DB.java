@@ -9,7 +9,7 @@ public interface DB<T> {
 
     List<T> findAll();
 
-    Optional<T> getById(Id id);
+    Optional<T> findById(Id id);
 
     void put(Id id, T toPut);
 }

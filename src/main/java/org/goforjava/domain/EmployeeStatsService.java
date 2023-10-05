@@ -1,13 +1,21 @@
 package org.goforjava.domain;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public interface EmployeeStatsService {
 
-    // znajdź 3 najlepiej opłacanych pracowników, posortowanych malejąco
+    List<Employee> findEmployeesOlderThen(long years);
+
     List<Employee> findThreeTopCompensatedEmployees();
 
-    Department findDepartmentWithLowestCompensationAverage();
+    Optional<Department> findDepartmentWithLowestCompensationAverage();
 
-    List<Employee> findEmployeesOlderThen(long years);
+    List<Employee> findEmployeesBasedIn(Localtion localtion);
+
+    Map<Integer, Long> countEmployeesByHireYear();
+
+    Map<Localtion, Long> countEmployeesByLocation();
+
 }

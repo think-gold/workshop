@@ -13,6 +13,10 @@ public class Id {
         return key;
     }
 
+    public static Id of(String key) {
+        return new Id(key);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -15,7 +15,7 @@ public class DepartmentDB implements DB<Department> {
     }
 
     @Override
-    public Optional<Department> getById(Id id) {
+    public Optional<Department> findById(Id id) {
         return Optional.ofNullable(departmentMap.get(id));
     }
 
