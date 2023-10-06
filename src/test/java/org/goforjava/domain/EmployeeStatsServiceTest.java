@@ -57,7 +57,7 @@ public class EmployeeStatsServiceTest extends EmployeesTest {
     @Test
     void shouldFindEmployeesBasedInGivenLocation() {
         //when
-        var employees = employeeStatsService.findEmployeesBasedIn(Localtion.GERMANY);
+        var employees = employeeStatsService.findEmployeesBasedIn(Location.GERMANY);
 
         //then
         assertEquals(3, employees.size());
@@ -94,10 +94,10 @@ public class EmployeeStatsServiceTest extends EmployeesTest {
 
         //then
         assertEquals(4, byLocationCount.keySet().size());
-        assertEquals(3, byLocationCount.get(Localtion.GERMANY));
-        assertEquals(10, byLocationCount.get(Localtion.POLAND));
-        assertEquals(6, byLocationCount.get(Localtion.SPAIN));
-        assertEquals(11, byLocationCount.get(Localtion.FRANCE));
+        assertEquals(3, byLocationCount.get(Location.GERMANY));
+        assertEquals(10, byLocationCount.get(Location.POLAND));
+        assertEquals(6, byLocationCount.get(Location.SPAIN));
+        assertEquals(11, byLocationCount.get(Location.FRANCE));
     }
 
 

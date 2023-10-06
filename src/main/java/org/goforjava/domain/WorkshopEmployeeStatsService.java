@@ -2,7 +2,6 @@ package org.goforjava.domain;
 
 import org.goforjava.db.DB;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,7 +32,7 @@ public class WorkshopEmployeeStatsService implements EmployeeStatsService{
     }
 
     @Override
-    public List<Employee> findEmployeesBasedIn(Localtion localtion) {
+    public List<Employee> findEmployeesBasedIn(Location location) {
         return List.of();
     }
 
@@ -43,7 +42,7 @@ public class WorkshopEmployeeStatsService implements EmployeeStatsService{
     }
 
     @Override
-    public Map<Localtion, Long> countEmployeesByLocation() {
+    public Map<Location, Long> countEmployeesByLocation() {
         return Map.of();
     }
 }
