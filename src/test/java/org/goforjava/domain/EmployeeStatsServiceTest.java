@@ -6,6 +6,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -61,9 +64,10 @@ public class EmployeeStatsServiceTest extends EmployeesTest {
 
         //then
         assertEquals(3, employees.size());
-        assertEquals("e10", employees.get(0).getId().getKey());
-        assertEquals("e11", employees.get(0).getId().getKey());
-        assertEquals("e22", employees.get(0).getId().getKey());
+        var collectedId = employees.stream().map(e -> e.getId().getKey()).collect(Collectors.toSet());
+        assertTrue(collectedId.contains("e10"));
+        assertTrue(collectedId.contains("e11"));
+        assertTrue(collectedId.contains("e22"));
 
     }
 
