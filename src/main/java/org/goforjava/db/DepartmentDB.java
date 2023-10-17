@@ -11,12 +11,26 @@ public class DepartmentDB implements DB<Department> {
 
     @Override
     public List<Department> findAll() {
-        return List.of();
+        List<Department> listOfDepartments = new ArrayList<>();
+
+        for(Department department : departmentMap.values()){
+            listOfDepartments.add(department);
+        }
+        return listOfDepartments;
     }
 
     @Override
     public Optional<Department> findById(Id id) {
-        return Optional.empty();
+        Department searchedDepartment = null;
+        for(Map.Entry<Id, Department> department : departmentMap.entrySet()){
+            if(department.getKey().equals(id)){
+                searchedDepartment = department.getValue();
+                break;
+            }
+        }
+
+        Optional<Department> departmentById = Optional.ofNullable(searchedDepartment);
+        return departmentById;
     }
 
     @Override

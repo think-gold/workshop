@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -104,5 +105,12 @@ public class EmployeeStatsServiceTest extends EmployeesTest {
         assertEquals(11, byLocationCount.get(Location.FRANCE));
     }
 
+    @Test
+    void shouldReturnListOfSalaryForDep(){
+        Id id = Id.of("d1");
+
+        List<Employee> listOfEmployee = employeeStatsService.getListOfEmployeeForDep(id);
+        assertEquals(10, listOfEmployee.size());
+    }
 
 }
