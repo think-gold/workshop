@@ -18,6 +18,4 @@ public interface EmployeeStatsService {
 
     Map<Location, Long> countEmployeesByLocation();
 
-    List<Employee> getListOfEmployeeForDep(Id id);
-
 }

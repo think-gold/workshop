@@ -32,7 +32,7 @@ public class WorkshopEmployeeStatsService implements EmployeeStatsService {
     public List<Employee> findThreeTopCompensatedEmployees() {
 
         List<Employee> searchedEmployees = employeeDB.findAll().stream()
-                .sorted(Comparator.comparing((Employee e) -> e.getGrossSalary()))
+                .sorted(Comparator.comparing((Employee e) -> e.getGrossSalary()).reversed())
                 .limit(3)
                 .toList();
         return searchedEmployees;
@@ -61,7 +61,7 @@ public class WorkshopEmployeeStatsService implements EmployeeStatsService {
                 continue;
             }
 
-            Long totalSalary = 0l;
+            Long totalSalary = 0L;
 
             for (long salary : listOfSalaryByDep) {
                 totalSalary += salary;
@@ -92,37 +92,46 @@ public class WorkshopEmployeeStatsService implements EmployeeStatsService {
     public List<Employee> findEmployeesBasedIn(Location location) {
         //znaleźć departament na podstawie lokalizacji
         //wypisać wszystkich pracownikow tego departamentu
+        List<Employee> result = new ArrayList<>();
 
         List<Id> departmentsByLocation = departmentDB.findAll().stream()
                 .filter(department -> department.getLocation().equals(location))
                 .map(department -> department.getId())
                 .toList();
 
-        List<Employee> listOfEmployees = new ArrayList<>();
+
+        List<Employee> listOfEmployees = employeeDB.findAll();
+//        listOfEmployees = employeeDB.findAll().stream()
+//                .filter(employee -> employee.getDepartmentId().equals(id))
+//                .toList();
+
         for (Id id : departmentsByLocation) {
-            listOfEmployees = employeeDB.findAll().stream()
-                    .filter(employee -> employee.getDepartmentId().equals(id))
-                    .toList();
+            for (Employee employee : listOfEmployees) {
+                if (employee.getDepartmentId().equals(id)) {
+                    result.add(employee);
+                }
+            }
         }
-        return listOfEmployees;
+        return result;
     }
 
     @Override
     public Map<Integer, Long> countEmployeesByHireYear() {
-        // ile pracownikow / rok zatrudnienia
+        //  rok zatrudnienia / ile pracownikow
         Map<Integer, Long> result = new HashMap<>();
         List<Employee> listOfEmployees = employeeDB.findAll();
 
-        long counter = 0;
+
         List<Integer> years = new ArrayList<>();
 
         for (Employee employee : listOfEmployees) {
             int hireYear = employee.getHireDate().getYear();
             if (!years.contains(hireYear)) {
-                result.put(hireYear, 1l);
+                years.add(hireYear);
+                result.put(hireYear, 1L);
             } else {
-                counter++;
-                result.replace(hireYear,counter);
+                long updatedNumberOfEmployees = result.get(hireYear) + 1;
+                result.replace(hireYear, updatedNumberOfEmployees);
             }
         }
 
@@ -131,15 +140,18 @@ public class WorkshopEmployeeStatsService implements EmployeeStatsService {
 
     @Override
     public Map<Location, Long> countEmployeesByLocation() {
-        return Map.of();
+        //mapa: lokalizacja, rozmiar listy pracownikow by location
+        //lista lokalizacji
+        //lista pracownikow z lokalizacji
+        Map<Location, Long> result = new HashMap<>();
+        List<Location> listOfLocations = Arrays.stream(Location.values()).toList();
+
+        for (Location location : listOfLocations) {
+            long numberOfEmployeesByLocation = findEmployeesBasedIn(location).size();
+            result.put(location, numberOfEmployeesByLocation);
+        }
+
+        return result;
     }
 
-    @Override
-    public List<Employee> getListOfEmployeeForDep(Id depId) {
-        List<Employee> salaryByDep = employeeDB.findAll().stream()
-                .filter(employee -> employee.getDepartmentId() == depId)
-                //.map(employee -> employee.getGrossSalary())
-                .toList();
-        return salaryByDep;
-    }
 }

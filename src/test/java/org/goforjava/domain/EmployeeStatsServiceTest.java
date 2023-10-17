@@ -105,12 +105,4 @@ public class EmployeeStatsServiceTest extends EmployeesTest {
         assertEquals(11, byLocationCount.get(Location.FRANCE));
     }
 
-    @Test
-    void shouldReturnListOfSalaryForDep(){
-        Id id = Id.of("d1");
-
-        List<Employee> listOfEmployee = employeeStatsService.getListOfEmployeeForDep(id);
-        assertEquals(10, listOfEmployee.size());
-    }
-
 }
