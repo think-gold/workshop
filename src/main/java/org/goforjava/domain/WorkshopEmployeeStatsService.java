@@ -1,6 +1,7 @@
 package org.goforjava.domain;
 
 import org.goforjava.db.DB;
+import org.goforjava.db.EmployeeDB;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -89,12 +90,43 @@ public class WorkshopEmployeeStatsService implements EmployeeStatsService {
 
     @Override
     public List<Employee> findEmployeesBasedIn(Location location) {
-        return List.of();
+        //znaleźć departament na podstawie lokalizacji
+        //wypisać wszystkich pracownikow tego departamentu
+
+        List<Id> departmentsByLocation = departmentDB.findAll().stream()
+                .filter(department -> department.getLocation().equals(location))
+                .map(department -> department.getId())
+                .toList();
+
+        List<Employee> listOfEmployees = new ArrayList<>();
+        for (Id id : departmentsByLocation) {
+            listOfEmployees = employeeDB.findAll().stream()
+                    .filter(employee -> employee.getDepartmentId().equals(id))
+                    .toList();
+        }
+        return listOfEmployees;
     }
 
     @Override
     public Map<Integer, Long> countEmployeesByHireYear() {
-        return Map.of();
+        // ile pracownikow / rok zatrudnienia
+        Map<Integer, Long> result = new HashMap<>();
+        List<Employee> listOfEmployees = employeeDB.findAll();
+
+        long counter = 0;
+        List<Integer> years = new ArrayList<>();
+
+        for (Employee employee : listOfEmployees) {
+            int hireYear = employee.getHireDate().getYear();
+            if (!years.contains(hireYear)) {
+                result.put(hireYear, 1l);
+            } else {
+                counter++;
+                result.replace(hireYear,counter);
+            }
+        }
+
+        return result;
     }
 
     @Override
